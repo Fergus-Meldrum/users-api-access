@@ -1,0 +1,18 @@
+{
+    "name": "fergusmeldrum/api-users-package",
+    "description": "Controlled access to users API",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ApiUsersPackage\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fergus Meldrum"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
