@@ -49,16 +49,6 @@ class UsersAccess
      */
     public function createUser(string $name, string $job): int
     {
-        if (!is_string($name)) {
-            $error = new Exception("name parameter must be a string.", 403);
-            throw($error);
-        }
-
-        if (!is_string($job)) {
-            $error = new Exception("job parameter must be a string.", 403);
-            throw($error);
-        }
-
         try {
             $reqresService = new ReqresService();
             return $reqresService->createUser($name, $job);

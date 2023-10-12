@@ -6,6 +6,7 @@ use ApiUsersPackage\Dtos\UserDto;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Http;
 
 class ReqresService
 {
@@ -14,23 +15,9 @@ class ReqresService
 
     public function makeGetRequest(string $url, array $params = null)
     {
-        $client = new PendingRequest();
-
-        // Set a timeout for the request (if needed)
-        $client->timeout(3);
-
-        $client->retry(3, 100, function (Exception $exception) {
-            return $exception->getCode() === 500;
-        });
-
-        // Perform the GET request
-        try {
-            $response = $client->get($url, $params);
-
-            return $response;
-        } catch (Exception $exception) {
-            throw $exception;
-        }
+        return Http::timeout(3)->retry(3, 100, function (Exception $exception) {
+            return ($exception->getCode() === 500);
+        })->get($url, $params);
     }
 
     public function makePostRequest(string $url, array $params = null)

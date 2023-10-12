@@ -9,6 +9,11 @@
             "Illuminate\\" : "vendor/illuminate"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "ApiUsersPackage\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Fergus Meldrum"
@@ -17,9 +22,11 @@
     "minimum-stability": "stable",
     "require": {
         "illuminate/http": "^10.0",
-        "illuminate/pagination": "^10.0"
+        "illuminate/pagination": "^10.0",
+        "illuminate/support": "^10.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.1"
+        "phpunit/phpunit": "^10.1",
+        "mockery/mockery": "^1.6"
     }
 }
