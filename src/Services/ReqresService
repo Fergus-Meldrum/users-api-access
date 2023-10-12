@@ -3,7 +3,7 @@
 namespace Services;
 
 use Illuminate\Support\Facades\Http;
-use App\Dtos\UserDto;
+use Dtos\UserDto;
 use Exception;
 use Illuminate\Http\Client\PendingRequest;
 
@@ -40,23 +40,23 @@ class ReqresService
     //     })->post($url, $params);
     // }
 
-    // public function getUserById(string $id): UserDto
-    // {
-    //     $response = $this->makeGetRequest(self::BASE_URL_USERS . $id);
+    public function getUserById(string $id): UserDto
+    {
+        $response = $this->makeGetRequest(self::BASE_URL_USERS . $id);
 
-    //     // Throw an exception unless the response has status code 200
-    //     $response->throwUnlessStatus(200);
+        // Throw an exception unless the response has status code 200
+        $response->throwUnlessStatus(200);
 
-    //     $userData = $response['data'];
+        $userData = $response['data'];
 
-    //     return new UserDto(
-    //         id: $userData['id'],
-    //         email: $userData['email'],
-    //         firstName: $userData['first_name'],
-    //         lastName: $userData['last_name'],
-    //         avatar: $userData['avatar']
-    //     );
-    // }
+        return new UserDto(
+            id: $userData['id'],
+            email: $userData['email'],
+            firstName: $userData['first_name'],
+            lastName: $userData['last_name'],
+            avatar: $userData['avatar']
+        );
+    }
 
     // public function getAllUsers(?int $page = null): LengthAwarePaginator
     // {
