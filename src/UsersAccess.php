@@ -13,6 +13,7 @@ class UsersAccess
     public function __construct(
         private ReqresService $reqresService,
     ) {
+        $this->$reqresService = new ReqresService();
     } 
 
     /**
