@@ -4,7 +4,8 @@ namespace ApiUsersPackage;
 
 use ApiUsersPackage\Dtos\UserDto;
 use ApiUsersPackage\Services\ReqresService;
-use Illuminate\Http\JsonResponse;
+use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Throwable;
 
 class UsersAccess
@@ -12,11 +13,12 @@ class UsersAccess
     /**
      * Retrieve a single user by ID
      */
-    public function getUserById(string $id): JsonResponse|UserDto
+    public function getUserById(string $id): UserDto
     {
-        // url param validation
+        // id param validation
         if (!is_numeric($id)) {
-            return new JsonResponse(['error' => "id parameter must be numeric."], 403);
+            $error = new Exception("id parameter must be numeric.", 403);
+            throw($error);
         }
 
         try {
@@ -24,24 +26,23 @@ class UsersAccess
             return $reqresService->getUserById($id);
         } catch (Throwable $e) {
             $errorMessage = $e->getCode() === 404 ? 'User with id ' . $id . ' not found' : $e->getMessage();
-            return new JsonResponse(['error' => $errorMessage], $e->getCode());
+            $error =  new Exception($errorMessage, $e->getCode());
+            throw($error);
         }
     }
 
-    // /**
-    //  * Retrieve a paginated list of users
-    //  */
-    // public function getAllUsers(?int $page = null): JsonResponse
-    // {
-    //     $response = new Response('');
-
-    //     try {
-    //         $paginatedUsers = $this->reqresService->getAllUsers($page);
-    //         return $response->json($paginatedUsers);
-    //     } catch (Throwable $e) {
-    //         return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
-    //     }
-    // }
+    /**
+     * Retrieve a paginated list of users
+     */
+    public function getAllUsers(?int $page = null): LengthAwarePaginator
+    {
+        try {
+            $reqresService = new ReqresService();
+            return $reqresService->getAllUsers($page);
+        } catch (Throwable $e) {
+            throw($e);
+        }
+    }
 
     // /**
     //  * Create a new user, providing a name and job, and return a User ID.
