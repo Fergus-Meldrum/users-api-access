@@ -44,16 +44,26 @@ class UsersAccess
         }
     }
 
-    // /**
-    //  * Create a new user, providing a name and job, and return a User ID.
-    //  */
-    // public function createUser(string $name, string $job): JsonResponse
-    // {
-    //     try {
-    //         $userId = $this->reqresService->createUser($name, $job);
-    //         return new JsonResponse(['user-id' => $userId]);
-    //     } catch (Throwable $e) {
-    //         return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
-    //     }
-    // }
+    /**
+     * Create a new user, providing a name and job, and return a User ID.
+     */
+    public function createUser(string $name, string $job): int
+    {
+        if (!is_string($name)) {
+            $error = new Exception("name parameter must be a string.", 403);
+            throw($error);
+        }
+
+        if (!is_string($job)) {
+            $error = new Exception("job parameter must be a string.", 403);
+            throw($error);
+        }
+
+        try {
+            $reqresService = new ReqresService();
+            return $reqresService->createUser($name, $job);
+        } catch (Throwable $e) {
+            throw($e);
+        }
+    }
 }

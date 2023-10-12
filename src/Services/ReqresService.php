@@ -33,12 +33,26 @@ class ReqresService
         }
     }
 
-    // public function makePostRequest(string $url, array $params = null)
-    // {
-    //     return Http::timeout(3)->retry(3, 100, function (Exception $exception) {
-    //         return $exception->getCode() === 500 || ($exception instanceof ConnectionException);
-    //     })->post($url, $params);
-    // }
+    public function makePostRequest(string $url, array $params = null)
+    {
+        $client = new PendingRequest();
+
+        // Set a timeout for the request (if needed)
+        $client->timeout(3);
+
+        $client->retry(3, 100, function (Exception $exception) {
+            return $exception->getCode() === 500;
+        });
+
+        // Perform the POST request
+        try {
+            $response = $client->post($url, $params);
+
+            return $response;
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+    }
 
     public function getUserById(string $id): UserDto
     {
@@ -87,16 +101,16 @@ class ReqresService
         );
     }
 
-    // public function createUser(string $name, string $job): int
-    // {
-    //     $response = $this->makePostRequest(self::BASE_URL_USERS, [
-    //         'name' => $name,
-    //         'job'  => $job,
-    //     ]);
+    public function createUser(string $name, string $job): int
+    {
+        $response = $this->makePostRequest(self::BASE_URL_USERS, [
+            'name' => $name,
+            'job'  => $job,
+        ]);
 
-    //     // Throw an exception unless the response has status code 200
-    //     $response->throwUnlessStatus(201);
+        // Throw an exception unless the response has status code 201
+        $response->throwUnlessStatus(201);
 
-    //     return (int) $response['id'];
-    // }
+        return (int) $response['id'];
+    }
 }
