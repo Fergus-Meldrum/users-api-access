@@ -3,6 +3,7 @@
 namespace Fergusmeldrum\ApiUsersPackage;
 
 use App\Http\Requests\CreateUserRequest;
+use Dtos\UserDto;
 use Services\ReqresService;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\JsonResponse;
@@ -10,16 +11,10 @@ use Throwable;
 
 class UsersAccess
 {
-    public function __construct(
-        private ReqresService $reqresService,
-    ) {
-        $this->$reqresService = new ReqresService();
-    } 
-
     /**
      * Retrieve a single user by ID
      */
-    public function getUserById(string $id): JsonResponse
+    public function getUserById(string $id): JsonResponse|UserDto
     {
         // url param validation
         if (!is_numeric($id)) {
@@ -27,8 +22,8 @@ class UsersAccess
         }
 
         try {
-            $user = $this->reqresService->getUserById($id);
-            return $user;
+            $reqresService = new ReqresService();
+            return $reqresService->getUserById($id);
         } catch (Throwable $e) {
             $errorMessage = $e->getCode() === 404 ? 'User with id ' . $id . ' not found' : $e->getMessage();
             return new JsonResponse(['error' => $errorMessage], $e->getCode());
