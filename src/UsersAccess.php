@@ -1,11 +1,9 @@
 <?php
 
-namespace Fergusmeldrum\ApiUsersPackage;
+namespace ApiUsersPackage;
 
-use App\Http\Requests\CreateUserRequest;
-use Dtos\UserDto;
-use Services\ReqresService;
-use Illuminate\Http\Client\Response;
+use ApiUsersPackage\Dtos\UserDto;
+use ApiUsersPackage\Services\ReqresService;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 

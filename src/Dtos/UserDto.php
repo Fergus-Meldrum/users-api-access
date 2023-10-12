@@ -1,6 +1,6 @@
 <?php
 
-namespace Dtos;
+namespace ApiUsersPackage\Dtos;
 
 use JsonSerializable;
 

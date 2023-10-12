@@ -1,9 +1,8 @@
 <?php
 
-namespace Services;
+namespace ApiUsersPackage\Services;
 
-use Illuminate\Support\Facades\Http;
-use Dtos\UserDto;
+use ApiUsersPackage\Dtos\UserDto;
 use Exception;
 use Illuminate\Http\Client\PendingRequest;
 

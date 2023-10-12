@@ -5,8 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Fergusmeldrum\\ApiUsersPackage\\": "src/",
-            "Services\\": "src/Services",
+            "ApiUsersPackage\\": "src/",
             "Illuminate\\" : "vendor/illuminate"
         }
     },
