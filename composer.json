@@ -6,6 +6,7 @@
     "autoload": {
         "psr-4": {
             "Fergusmeldrum\\ApiUsersPackage\\": "src/",
+            "Services\\": "src/Services",
             "Illuminate\\" : "vendor/illuminate"
         }
     },
