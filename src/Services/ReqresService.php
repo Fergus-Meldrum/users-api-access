@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Http;
 
 class ReqresService
 {
-
     public const BASE_URL_USERS = 'https://reqres.in/api/users/';
 
     public function makeGetRequest(string $url, array $params = null)
@@ -22,23 +21,9 @@ class ReqresService
 
     public function makePostRequest(string $url, array $params = null)
     {
-        $client = new PendingRequest();
-
-        // Set a timeout for the request (if needed)
-        $client->timeout(3);
-
-        $client->retry(3, 100, function (Exception $exception) {
-            return $exception->getCode() === 500;
-        });
-
-        // Perform the POST request
-        try {
-            $response = $client->post($url, $params);
-
-            return $response;
-        } catch (Exception $exception) {
-            throw $exception;
-        }
+        return Http::timeout(3)->retry(3, 100, function (Exception $exception) {
+            return ($exception->getCode() === 500);
+        })->post($url, $params);
     }
 
     public function getUserById(string $id): UserDto
