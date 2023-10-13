@@ -25,6 +25,21 @@ To use it in your project add the following to your composer.json file:
     }
     ```
 
+## Package usage in project
+
+To access package in file:
+
+    ```
+    use ApiUsersPackage\UsersAccess;
+    ```
+
+Example usage:
+
+    ```
+    $package = new UsersAccess();
+    $package->createUser('John', 'cleaner');
+    ```
+
 ## Information on project submission
 
 There are no useful tests for this project as I ran out of time to
